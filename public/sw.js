@@ -3,7 +3,9 @@
 // serves cached copies for offline access, updates from network in background.
 
 const CACHE_NAME = "trip-calc-v1";
-const PRECACHE_URLS = ["/", "/index.html"];
+// Use relative paths — the SW scope is the app's base path
+const BASE = self.location.pathname.replace(/\/sw\.js$/, "");
+const PRECACHE_URLS = [BASE + "/", BASE + "/index.html"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

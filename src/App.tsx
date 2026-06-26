@@ -12,7 +12,7 @@ import { AnalyticsPage } from "./pages/AnalyticsPage";
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/trip-calculator">
       <AppProvider>
         <ThemeProvider>
           <ToastProvider>
