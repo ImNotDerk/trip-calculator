@@ -133,6 +133,64 @@ npm run preview  # Preview production build locally
 
 Output is a static site (HTML + JS + CSS) deployable to GitHub Pages, Vercel, Netlify, or any static host.
 
+## Development Workflow
+
+### Branching Strategy
+
+| Branch | Off From | Merge To | Purpose | OpenSpec? |
+|---|---|---|---|---|
+| `main` | — | — | Production, auto-deploys | — |
+| `develop` | `main` | `main` | Integration | — |
+| `feat/*` | `develop` | `develop` | New features | ✅ Required |
+| `fix/*` | `develop` | `develop` | Bug fixes | ❌ Skip |
+| `docs/*` | `develop` | `develop` | Documentation only | ❌ Skip |
+| `chore/*` | `develop` | `develop` | Dependencies, config, tooling | ❌ Skip |
+| `refactor/*` | `develop` | `develop` | Code restructuring, no behavior change | ❌ Skip |
+
+**Rules:**
+- **Never commit directly to `main`** — it's only touched via merge from `develop`.
+- **`feat/*` branches require the full OpenSpec process** (propose → review → apply → review).
+- **All other branch types** just need a PR to `develop` with a clear description.
+- **Branch naming**: use kebab-case, e.g. `feat/fill-up-export`, `fix/dark-mode-fouc`, `docs/api-readme`.
+
+### OpenSpec Process
+
+Every new feature must go through OpenSpec. The process has two phases, each with a review gate:
+
+```
+feat/my-feature (off develop)
+  │
+  ├── Phase 1: PROPOSE
+  │   ├─ /opsx:propose   → generates spec docs
+  │   ├─ Review specs    → PR to develop, approve, merge
+  │   │
+  │   ├── Phase 2: IMPLEMENT
+  │   ├─ /opsx:apply     → implements from the spec tasks
+  │   └─ Review code     → PR to develop, approve, merge
+  │
+  └── develop → main     → GitHub Actions deploys to Pages
+```
+
+**Before starting a feature:**
+1. Always checkout from `develop`: `git checkout develop && git checkout -b feat/my-feature`
+2. Run `/opsx:explore` if the feature needs clarification before proposing
+3. Run `/opsx:propose` to generate specs, design, and task list
+4. Open a PR from `feat/my-feature` → `develop` for spec review
+5. After spec PR is merged, run `/opsx:apply` to implement
+6. Open a second PR from `feat/my-feature` → `develop` for code review
+7. After code PR is merged, create a PR from `develop` → `main` to deploy
+
+### OpenSpec Commands
+
+| Command | What it does |
+|---|---|
+| `/opsx:explore` | Think through ideas, clarify requirements before proposing |
+| `/opsx:propose` | Generate specs, design docs, and task list |
+| `/opsx:apply` | Implement tasks from the approved spec |
+| `/opsx:archive` | Archive completed changes after deployment |
+
+**Key rule:** All new specs go in `openspec/changes/trip-calculator-app/specs/<feature-name>/spec.md`.
+
 ## Dependencies
 
 | Package | Purpose |
