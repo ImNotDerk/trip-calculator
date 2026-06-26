@@ -133,6 +133,56 @@ npm run preview  # Preview production build locally
 
 Output is a static site (HTML + JS + CSS) deployable to GitHub Pages, Vercel, Netlify, or any static host.
 
+## Development Workflow
+
+### Branching Strategy
+
+| Branch | Purpose | Deploys? |
+|---|---|---|
+| `main` | Production | ✅ GitHub Pages (auto on push) |
+| `develop` | Integration | ❌ |
+| `feat/*` | Feature work | ❌ |
+
+All feature work happens on `feat/*` branches off `develop`. `main` is only touched via merge from `develop` when a feature is ready to ship. **Never commit directly to `main`.**
+
+### OpenSpec Process
+
+Every new feature must go through OpenSpec. The process has two phases, each with a review gate:
+
+```
+feat/my-feature (off develop)
+  │
+  ├── Phase 1: PROPOSE
+  │   ├─ /opsx:propose   → generates spec docs
+  │   ├─ Review specs    → PR to develop, approve, merge
+  │   │
+  │   ├── Phase 2: IMPLEMENT
+  │   ├─ /opsx:apply     → implements from the spec tasks
+  │   └─ Review code     → PR to develop, approve, merge
+  │
+  └── develop → main     → GitHub Actions deploys to Pages
+```
+
+**Before starting a feature:**
+1. Always checkout from `develop`: `git checkout develop && git checkout -b feat/my-feature`
+2. Run `/opsx:explore` if the feature needs clarification before proposing
+3. Run `/opsx:propose` to generate specs, design, and task list
+4. Open a PR from `feat/my-feature` → `develop` for spec review
+5. After spec PR is merged, run `/opsx:apply` to implement
+6. Open a second PR from `feat/my-feature` → `develop` for code review
+7. After code PR is merged, create a PR from `develop` → `main` to deploy
+
+### OpenSpec Commands
+
+| Command | What it does |
+|---|---|
+| `/opsx:explore` | Think through ideas, clarify requirements before proposing |
+| `/opsx:propose` | Generate specs, design docs, and task list |
+| `/opsx:apply` | Implement tasks from the approved spec |
+| `/opsx:archive` | Archive completed changes after deployment |
+
+**Key rule:** All new specs go in `openspec/changes/trip-calculator-app/specs/<feature-name>/spec.md`.
+
 ## Dependencies
 
 | Package | Purpose |
