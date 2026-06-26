@@ -152,3 +152,4 @@ Output is a static site (HTML + JS + CSS) deployable to GitHub Pages, Vercel, Ne
 - **Respect the design system** — cream canvas, coral primary, serif display, hairline borders, 8px button radius, 12px card radius.
 - **Use two-click confirmation for destructive actions** — first click toggles a "Confirm?" state, second click executes.
 - **All new specs go in `openspec/changes/trip-calculator-app/specs/<feature-name>/spec.md`** following the existing format.
+- **Never commit or push without approval** — after making changes, suggest the `git add`, `git commit`, and `git push` commands for the user to run themselves. Do not execute them automatically.
