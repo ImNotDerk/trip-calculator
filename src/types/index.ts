@@ -14,6 +14,7 @@ export interface BackupEnvelope {
 export interface Car {
   id: string;
   name: string;
+  plateNumber?: string;
   createdAt: string; // ISO date string
 }
 

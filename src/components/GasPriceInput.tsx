@@ -4,7 +4,7 @@ export function GasPriceInput() {
   const { state, dispatch } = useAppContext();
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+    <div className="flex flex-col gap-2 w-full sm:w-auto sm:flex-row sm:items-center sm:gap-3">
       <label
         htmlFor="gas-price"
         className="text-sm text-muted whitespace-nowrap"
@@ -29,7 +29,7 @@ export function GasPriceInput() {
             })
           }
           placeholder="0.00"
-          className="h-10 w-full rounded-md border border-hairline bg-canvas pl-8 pr-3.5 text-sm text-ink outline-none transition-colors focus:border-primary focus:ring-[3px] focus:ring-primary/15"
+          className="h-11 w-full rounded-md border border-hairline bg-canvas pl-8 pr-3.5 text-sm text-ink outline-none transition-colors focus:border-primary focus:ring-[3px] focus:ring-primary/15"
           style={{ fontFamily: "Inter, sans-serif" }}
         />
       </div>

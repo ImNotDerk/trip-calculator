@@ -75,7 +75,7 @@ export function FillUpButton({ carId }: FillUpButtonProps) {
 
       {/* Confirmation modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4">
           <div className="mx-4 w-full max-w-md rounded-lg bg-canvas p-8 shadow-lg">
             <h3 className="mb-2" style={{ fontSize: "22px" }}>
               Confirm Fill-Up
@@ -107,17 +107,17 @@ export function FillUpButton({ carId }: FillUpButtonProps) {
               </table>
             </div>
 
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-soft"
+                className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleFillUp}
-                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active"
+                className="w-full rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Confirm Fill-Up

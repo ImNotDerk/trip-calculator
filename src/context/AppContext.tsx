@@ -40,7 +40,7 @@ const initialState: AppState = {
 /* ── Actions ── */
 
 export type AppAction =
-  | { type: "ADD_CAR"; name: string }
+  | { type: "ADD_CAR"; name: string; plateNumber?: string }
   | { type: "REMOVE_CAR"; carId: string }
   | { type: "SELECT_CAR"; carId: string }
   | { type: "ADD_TRIP"; carId: string; trip: Omit<Trip, "id" | "carId" | "estimatedUsageL" | "status" | "fillUpId"> }
@@ -63,6 +63,7 @@ function reducer(state: AppState, action: AppAction): AppState {
       const car: Car = {
         id: generateId(),
         name: action.name.trim(),
+        plateNumber: action.plateNumber?.trim() || undefined,
         createdAt: new Date().toISOString(),
       };
       return { ...state, cars: [...state.cars, car], selectedCarId: car.id };

@@ -121,7 +121,7 @@ export function AnalyticsPage() {
           className="text-sm text-muted no-underline hover:text-ink transition-colors"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
-          ← {car.name}
+          ← {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}
         </Link>
       </div>
       <div className="mb-8">
@@ -130,7 +130,7 @@ export function AnalyticsPage() {
           className="mt-2 text-muted"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
-          Trip efficiency and fill-up cost trends for {car.name}.
+          Trip efficiency and fill-up cost trends for {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}.
         </p>
       </div>
 
@@ -144,14 +144,14 @@ export function AnalyticsPage() {
           </p>
           <Link
             to={`/cars/${car.id}/trips/new`}
-            className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary no-underline"
+            className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary no-underline"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             + Log Trip
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {/* Chart 1: Trip Efficiency */}
           <ChartCard title="Trip Efficiency (km/L)">
             {efficiencyData.length === 0 ? (
