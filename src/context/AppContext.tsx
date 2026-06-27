@@ -50,6 +50,7 @@ export type AppAction =
   | { type: "DELETE_FILL_UP"; fillUpId: string }
   | { type: "UNDO_FILL_UP"; carId: string }
   | { type: "SET_GAS_PRICE"; price: number }
+  | { type: "UPDATE_CAR"; carId: string; name: string; plateNumber?: string }
   | {
       type: "REPLACE_ALL";
       state: { cars: Car[]; trips: Trip[]; fillUps: FillUp[]; gasPrice: number };
@@ -201,6 +202,23 @@ function reducer(state: AppState, action: AppAction): AppState {
 
     case "SET_GAS_PRICE": {
       return { ...state, gasPrice: action.price };
+    }
+
+    case "UPDATE_CAR": {
+      const trimmedName = action.name.trim();
+      if (!trimmedName) return state;
+      return {
+        ...state,
+        cars: state.cars.map((c) =>
+          c.id === action.carId
+            ? {
+                ...c,
+                name: trimmedName,
+                plateNumber: action.plateNumber?.trim() || undefined,
+              }
+            : c,
+        ),
+      };
     }
 
     case "REPLACE_ALL": {
