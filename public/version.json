@@ -1,0 +1,26 @@
+{
+  "version": "1.1.0",
+  "entries": [
+    {
+      "version": "1.1.0",
+      "date": "2026-06-27",
+      "title": "What's New",
+      "changes": [
+        "Changelog popup that shows what's new after each update",
+        "Bug fixes and performance improvements"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-01-15",
+      "title": "Initial Release",
+      "changes": [
+        "Track car trips and fuel usage",
+        "Fill-up history with undo support",
+        "Analytics dashboard with charts",
+        "Dark mode support",
+        "Data backup and restore"
+      ]
+    }
+  ]
+}
