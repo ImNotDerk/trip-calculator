@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useToast } from "../components/Toast";
+import { EditCarModal } from "../components/EditCarModal";
 import { TripTable } from "../components/TripTable";
 import { FillUpButton } from "../components/FillUpButton";
 import { GasPriceInput } from "../components/GasPriceInput";
@@ -11,6 +12,7 @@ export function CarDetailPage() {
   const { state, dispatch } = useAppContext();
   const { addToast } = useToast();
   const [confirmUndo, setConfirmUndo] = useState(false);
+  const [editingCar, setEditingCar] = useState(false);
 
   const car = state.cars.find((c) => c.id === carId);
 
@@ -62,6 +64,13 @@ export function CarDetailPage() {
                 {car.plateNumber}
               </span>
             )}
+            <button
+              onClick={() => setEditingCar(true)}
+              className="ml-3 inline-block align-middle rounded-md border border-hairline bg-canvas px-3 py-1 text-xs font-medium text-muted transition-colors hover:text-ink hover:border-ink/30"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Edit
+            </button>
           </h1>
           <p className="mt-2 text-muted" style={{ fontFamily: "Inter, sans-serif" }}>
             {activeTrips.length} active trip
@@ -155,6 +164,23 @@ export function CarDetailPage() {
         </Link>
         <FillUpButton carId={car.id} />
       </div>
+
+      {/* Edit car modal */}
+      {editingCar && (
+        <EditCarModal
+          car={car}
+          onClose={() => setEditingCar(false)}
+          onSave={(name, plateNumber) => {
+            dispatch({
+              type: "UPDATE_CAR",
+              carId: car.id,
+              name,
+              plateNumber,
+            });
+            setEditingCar(false);
+          }}
+        />
+      )}
 
       {/* Active trips */}
       {activeTrips.length === 0 ? (

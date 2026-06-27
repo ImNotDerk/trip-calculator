@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { EditCarModal } from "../components/EditCarModal";
+import type { Car } from "../types";
 
 export function CarManagementPage() {
   const { state, dispatch } = useAppContext();
@@ -10,6 +12,7 @@ export function CarManagementPage() {
   const [newPlateNumber, setNewPlateNumber] = useState("");
   const [error, setError] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [editingCar, setEditingCar] = useState<Car | null>(null);
 
   const openAddModal = () => {
     setNewCarName("");
@@ -90,13 +93,23 @@ export function CarManagementPage() {
                     {fillUpCount(car.id) !== 1 ? "s" : ""}
                   </p>
                 </div>
-                <button
-                  onClick={() => setDeleteTarget(car.id)}
-                  className="rounded-md px-3 py-2 text-xs font-medium text-muted transition-colors hover:text-error"
-                  style={{ fontFamily: "Inter, sans-serif" }}
-                >
-                  Delete
-                </button>
+                <div className="flex items-center gap-1 text-xs text-muted-soft">
+                  <button
+                    onClick={() => setEditingCar(car)}
+                    className="rounded-md px-2 py-1 text-xs font-medium text-muted transition-colors hover:text-ink"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Edit
+                  </button>
+                  <span aria-hidden="true">·</span>
+                  <button
+                    onClick={() => setDeleteTarget(car.id)}
+                    className="rounded-md px-2 py-1 text-xs font-medium text-muted transition-colors hover:text-error"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
               <button
@@ -184,6 +197,23 @@ export function CarManagementPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Edit car modal */}
+      {editingCar && (
+        <EditCarModal
+          car={editingCar}
+          onClose={() => setEditingCar(null)}
+          onSave={(name, plateNumber) => {
+            dispatch({
+              type: "UPDATE_CAR",
+              carId: editingCar.id,
+              name,
+              plateNumber,
+            });
+            setEditingCar(null);
+          }}
+        />
       )}
 
       {/* Delete confirmation modal */}
