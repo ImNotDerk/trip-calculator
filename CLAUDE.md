@@ -149,6 +149,7 @@ Output is a static site (HTML + JS + CSS) deployable to GitHub Pages, Vercel, Ne
 
 **Rules:**
 - **Never commit directly to `main`** — it's only touched via merge from `develop`.
+- **Never do OpenSpec work on `develop`** — all `/opsx:propose` and `/opsx:apply` commands MUST run inside a `feat/*` branch. Creating specs, designs, or implementation directly on `develop` is forbidden.
 - **`feat/*` branches require the full OpenSpec process** (propose → review → apply → review).
 - **All other branch types** just need a PR to `develop` with a clear description.
 - **Branch naming**: use kebab-case, e.g. `feat/fill-up-export`, `fix/dark-mode-fouc`, `docs/api-readme`.
@@ -172,7 +173,7 @@ feat/my-feature (off develop)
 ```
 
 **Before starting a feature:**
-1. Always checkout from `develop`: `git checkout develop && git checkout -b feat/my-feature`
+1. **CREATE A BRANCH FIRST** — always start from `develop`: `git checkout develop && git checkout -b feat/my-feature`. This step is MANDATORY. Never skip it.
 2. Run `/opsx:explore` if the feature needs clarification before proposing
 3. Run `/opsx:propose` to generate specs, design, and task list
 4. Open a PR from `feat/my-feature` → `develop` for spec review
@@ -204,6 +205,7 @@ feat/my-feature (off develop)
 
 ## Notes for Claude
 
+- **Never run OpenSpec commands on `develop`** — always create a `feat/<name>` branch from `develop` first. This is the most important rule.
 - **Don't hardcode colors** — always use Tailwind utility classes that map to CSS custom properties.
 - **Don't add state libraries** — Context + useReducer is the intended pattern.
 - **Don't add a backend** — this is intentionally client-side only.
