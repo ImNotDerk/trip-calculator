@@ -72,7 +72,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
       {/* Toast container — fixed bottom-right */}
       {toasts.length > 0 && (
-        <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 max-w-sm">
+        <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-3 max-w-[calc(100vw-2rem)] sm:bottom-6 sm:right-6 sm:max-w-sm">
           {toasts.map((toast) => (
             <div
               key={toast.id}
@@ -94,7 +94,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                       toast.action!.onClick();
                       removeToast(toast.id);
                     }}
-                    className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-on-primary transition-colors hover:bg-primary-active whitespace-nowrap"
+                    className="rounded-md bg-primary px-3 py-2 text-xs font-medium text-on-primary transition-colors hover:bg-primary-active whitespace-nowrap"
                     style={{ fontFamily: "Inter, sans-serif" }}
                   >
                     {toast.action.label}
@@ -102,7 +102,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 )}
                 <button
                   onClick={() => removeToast(toast.id)}
-                  className="text-muted-soft hover:text-ink transition-colors"
+                  className="p-2 text-muted-soft hover:text-ink transition-colors"
                   aria-label="Dismiss"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

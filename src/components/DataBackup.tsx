@@ -331,7 +331,7 @@ export function DataBackup() {
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
           <button
             onClick={handleExport}
-            className="w-full rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
+            className="w-full rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Download Backup
@@ -339,7 +339,7 @@ export function DataBackup() {
 
           <button
             onClick={handleImportClick}
-            className="w-full rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
+            className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Import File
@@ -347,7 +347,7 @@ export function DataBackup() {
 
           <button
             onClick={handleOpenPaste}
-            className="w-full rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
+            className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Paste Backup
@@ -399,14 +399,14 @@ export function DataBackup() {
             <div className="mt-4 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={handlePasteClose}
-                className="w-full rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
+                className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 onClick={handlePasteContinue}
-                className="w-full rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
+                className="w-full rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Continue
@@ -447,14 +447,14 @@ export function DataBackup() {
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={handleCancelImport}
-                className="w-full rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
+                className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-soft sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmImport}
-                className="w-full rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
+                className="w-full rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Import

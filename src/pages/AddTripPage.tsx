@@ -71,17 +71,17 @@ export function AddTripPage() {
           className="text-sm text-muted no-underline hover:text-ink transition-colors"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
-          ← {car.name}
+          ← {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}
         </Link>
         <h1 className="mt-2">Log a Trip</h1>
         <p className="mt-2 text-muted" style={{ fontFamily: "Inter, sans-serif" }}>
-          Record a new trip for {car.name}.
+          Record a new trip for {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}.
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="surface-card rounded-lg p-8 max-w-xl"
+        className="surface-card rounded-lg p-6 sm:p-8 max-w-xl"
       >
         {/* Date */}
         <Field label="Date" error={errors.date} required>
@@ -101,7 +101,7 @@ export function AddTripPage() {
                 key={d}
                 type="button"
                 onClick={() => setDirection(d)}
-                className={`rounded-md px-4 py-2 text-sm font-medium capitalize transition-colors ${
+                className={`rounded-md px-4 py-2.5 text-sm font-medium capitalize transition-colors ${
                   direction === d
                     ? "bg-primary text-on-primary"
                     : "border border-hairline bg-canvas text-muted hover:text-ink"
@@ -157,7 +157,7 @@ export function AddTripPage() {
 
         {/* Estimated usage (read-only) */}
         <Field label="Estimated Fuel Usage">
-          <div className="h-10 flex items-center px-3.5 rounded-md bg-surface-soft text-ink text-sm tabular-nums">
+          <div className="h-11 flex items-center px-3.5 rounded-md bg-surface-soft text-ink text-sm tabular-nums">
             {estimated.toFixed(2)} L
           </div>
         </Field>
@@ -183,14 +183,14 @@ export function AddTripPage() {
         <div className="flex gap-3 mt-8">
           <button
             type="submit"
-            className="h-10 rounded-md bg-primary px-5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active"
+            className="h-11 rounded-md bg-primary px-5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Log Trip
           </button>
           <Link
             to={`/cars/${car.id}`}
-            className="h-10 rounded-md border border-hairline bg-canvas px-5 flex items-center text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
+            className="h-11 rounded-md border border-hairline bg-canvas px-5 flex items-center text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Cancel
@@ -235,7 +235,7 @@ function Field({
 
 function inputClass(error?: string): string {
   const base =
-    "w-full h-10 rounded-md border bg-canvas px-3.5 text-sm text-ink outline-none transition-colors focus:border-primary focus:ring-[3px] focus:ring-primary/15";
+    "w-full h-11 rounded-md border bg-canvas px-3.5 text-sm text-ink outline-none transition-colors focus:border-primary focus:ring-[3px] focus:ring-primary/15";
   const border = error ? "border-error" : "border-hairline";
   return `${base} ${border}`;
 }

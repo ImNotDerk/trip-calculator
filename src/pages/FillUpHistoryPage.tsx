@@ -62,11 +62,11 @@ export function FillUpHistoryPage() {
           className="text-sm text-muted no-underline hover:text-ink transition-colors"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
-          ← {car.name}
+          ← {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}
         </Link>
         <h1 className="mt-2">Fill-Up History</h1>
         <p className="mt-2 text-muted" style={{ fontFamily: "Inter, sans-serif" }}>
-          Past fill-ups for {car.name}, newest first.
+          Past fill-ups for {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}, newest first.
         </p>
       </div>
 
@@ -77,10 +77,10 @@ export function FillUpHistoryPage() {
           </p>
           <Link
             to={`/cars/${car.id}`}
-            className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary no-underline"
+            className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary no-underline"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Go to {car.name}
+            Go to {car.name}{car.plateNumber ? ` (${car.plateNumber})` : ""}
           </Link>
         </div>
       ) : (
@@ -149,11 +149,11 @@ export function FillUpHistoryPage() {
                     <div className="border-t border-hairline pt-5">
                       <TripTable trips={trips} />
                     </div>
-                    <div className="mt-4 flex justify-end gap-3">
+                    <div className="mt-4 flex flex-wrap justify-end gap-3">
                       {fillUp.id === latestFillUpId && (
                         <button
                           onClick={() => setUndoTarget(fillUp.id)}
-                          className="rounded-md px-3 py-1.5 text-xs font-medium text-accent-teal transition-colors hover:underline"
+                          className="rounded-md px-3 py-2 text-xs font-medium text-accent-teal transition-colors hover:underline"
                           style={{ fontFamily: "Inter, sans-serif" }}
                         >
                           Undo — restore trips
@@ -161,7 +161,7 @@ export function FillUpHistoryPage() {
                       )}
                       <button
                         onClick={() => setDeleteTarget(fillUp.id)}
-                        className="rounded-md px-3 py-1.5 text-xs font-medium text-muted transition-colors hover:text-error"
+                        className="rounded-md px-3 py-2 text-xs font-medium text-muted transition-colors hover:text-error"
                         style={{ fontFamily: "Inter, sans-serif" }}
                       >
                         Delete
@@ -189,17 +189,17 @@ export function FillUpHistoryPage() {
               This will remove the fill-up record and restore all its trips
               back to active status. The trip data will not be lost.
             </p>
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={() => setUndoTarget(null)}
-                className="rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink"
+                className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleUndo}
-                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active"
+                className="w-full rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Undo Fill-Up
@@ -223,17 +223,17 @@ export function FillUpHistoryPage() {
               This will permanently delete the fill-up record and all trips
               linked to it. This cannot be undone.
             </p>
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 onClick={() => setDeleteTarget(null)}
-                className="rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink"
+                className="w-full rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="rounded-md bg-error px-5 py-2.5 text-sm font-medium text-white"
+                className="w-full rounded-md bg-error px-5 py-3 text-sm font-medium text-white sm:w-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Delete
