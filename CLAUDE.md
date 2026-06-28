@@ -137,22 +137,13 @@ Output is a static site (HTML + JS + CSS) deployable to GitHub Pages, Vercel, Ne
 
 ### Branching Strategy
 
-| Branch | Off From | Merge To | Purpose | OpenSpec? |
-|---|---|---|---|---|
-| `main` | — | — | Production, auto-deploys | — |
-| `develop` | `main` | `main` | Integration | — |
-| `feat/*` | `develop` | `develop` | New features | ✅ Required |
-| `fix/*` | `develop` | `develop` | Bug fixes | ❌ Skip |
-| `docs/*` | `develop` | `develop` | Documentation only | ❌ Skip |
-| `chore/*` | `develop` | `develop` | Dependencies, config, tooling | ❌ Skip |
-| `refactor/*` | `develop` | `develop` | Code restructuring, no behavior change | ❌ Skip |
+| Branch | Purpose | Deploys? |
+|---|---|---|
+| `main` | Production | ✅ GitHub Pages (auto on push) |
+| `develop` | Integration | ❌ |
+| `feat/*` | Feature work | ❌ |
 
-**Rules:**
-- **Never commit directly to `main`** — it's only touched via merge from `develop`.
-- **Never do OpenSpec work on `develop`** — all `/opsx:propose` and `/opsx:apply` commands MUST run inside a `feat/*` branch. Creating specs, designs, or implementation directly on `develop` is forbidden.
-- **`feat/*` branches require the full OpenSpec process** (propose → review → apply → review).
-- **All other branch types** just need a PR to `develop` with a clear description.
-- **Branch naming**: use kebab-case, e.g. `feat/fill-up-export`, `fix/dark-mode-fouc`, `docs/api-readme`.
+All feature work happens on `feat/*` branches off `develop`. `main` is only touched via merge from `develop` when a feature is ready to ship. **Never commit directly to `main`.**
 
 ### OpenSpec Process
 
@@ -173,7 +164,7 @@ feat/my-feature (off develop)
 ```
 
 **Before starting a feature:**
-1. **CREATE A BRANCH FIRST** — always start from `develop`: `git checkout develop && git checkout -b feat/my-feature`. This step is MANDATORY. Never skip it.
+1. Always checkout from `develop`: `git checkout develop && git checkout -b feat/my-feature`
 2. Run `/opsx:explore` if the feature needs clarification before proposing
 3. Run `/opsx:propose` to generate specs, design, and task list
 4. Open a PR from `feat/my-feature` → `develop` for spec review
