@@ -196,9 +196,11 @@ feat/my-feature (off develop)
 
 ## Notes for Claude
 
+- **Never run OpenSpec commands on `develop`** — always create a `feat/<name>` branch from `develop` first. This is the most important rule.
 - **Don't hardcode colors** — always use Tailwind utility classes that map to CSS custom properties.
 - **Don't add state libraries** — Context + useReducer is the intended pattern.
 - **Don't add a backend** — this is intentionally client-side only.
 - **Respect the design system** — cream canvas, coral primary, serif display, hairline borders, 8px button radius, 12px card radius.
 - **Use two-click confirmation for destructive actions** — first click toggles a "Confirm?" state, second click executes.
 - **All new specs go in `openspec/changes/trip-calculator-app/specs/<feature-name>/spec.md`** following the existing format.
+- **Never commit or push without approval** — after making changes, suggest the `git add`, `git commit`, and `git push` commands for the user to run themselves. Do not execute them automatically.

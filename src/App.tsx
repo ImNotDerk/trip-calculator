@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import { ThemeProvider } from "./hooks/useTheme";
 import { ToastProvider } from "./components/Toast";
+import { ChangelogChecker } from "./components/ChangelogChecker";
 import { Layout } from "./components/Layout";
 import { DashboardPage } from "./pages/DashboardPage";
 import { CarManagementPage } from "./pages/CarManagementPage";
@@ -16,6 +17,7 @@ export function App() {
       <AppProvider>
         <ThemeProvider>
           <ToastProvider>
+            <ChangelogChecker />
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<DashboardPage />} />

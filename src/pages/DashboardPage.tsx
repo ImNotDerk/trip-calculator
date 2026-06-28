@@ -32,7 +32,7 @@ export function DashboardPage() {
           </p>
           <Link
             to="/cars"
-            className="inline-block rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active no-underline"
+            className="inline-block rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary transition-colors hover:bg-primary-active no-underline"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Add Car

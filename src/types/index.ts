@@ -14,6 +14,7 @@ export interface BackupEnvelope {
 export interface Car {
   id: string;
   name: string;
+  plateNumber?: string;
   createdAt: string; // ISO date string
 }
 
@@ -50,4 +51,18 @@ export interface FillUp {
   totalTollCost: number;
   grandTotal: number;
   tripIds: string[];
+}
+
+/** A single changelog entry shown in the version popup. */
+export interface ChangelogEntry {
+  version: string;
+  date: string;
+  title: string;
+  changes: string[];
+}
+
+/** Top-level structure of public/version.json. */
+export interface VersionManifest {
+  version: string;
+  entries: ChangelogEntry[];
 }

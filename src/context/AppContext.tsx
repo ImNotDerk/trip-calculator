@@ -40,16 +40,17 @@ const initialState: AppState = {
 /* ── Actions ── */
 
 export type AppAction =
-  | { type: "ADD_CAR"; name: string }
+  | { type: "ADD_CAR"; name: string; plateNumber?: string }
   | { type: "REMOVE_CAR"; carId: string }
   | { type: "SELECT_CAR"; carId: string }
   | { type: "ADD_TRIP"; carId: string; trip: Omit<Trip, "id" | "carId" | "estimatedUsageL" | "status" | "fillUpId"> }
   | { type: "UPDATE_TRIP"; tripId: string; updates: Partial<Omit<Trip, "id" | "carId" | "status" | "fillUpId">> }
   | { type: "DELETE_TRIP"; tripId: string }
-  | { type: "FILL_UP"; carId: string; gasPrice: number }
+  | { type: "FILL_UP"; carId: string; gasPrice: number; tripIds: string[] }
   | { type: "DELETE_FILL_UP"; fillUpId: string }
   | { type: "UNDO_FILL_UP"; carId: string }
   | { type: "SET_GAS_PRICE"; price: number }
+  | { type: "UPDATE_CAR"; carId: string; name: string; plateNumber?: string }
   | {
       type: "REPLACE_ALL";
       state: { cars: Car[]; trips: Trip[]; fillUps: FillUp[]; gasPrice: number };
@@ -63,6 +64,7 @@ function reducer(state: AppState, action: AppAction): AppState {
       const car: Car = {
         id: generateId(),
         name: action.name.trim(),
+        plateNumber: action.plateNumber?.trim() || undefined,
         createdAt: new Date().toISOString(),
       };
       return { ...state, cars: [...state.cars, car], selectedCarId: car.id };
@@ -129,20 +131,24 @@ function reducer(state: AppState, action: AppAction): AppState {
     }
 
     case "FILL_UP": {
-      const activeTrips = state.trips.filter(
-        (t) => t.carId === action.carId && t.status === "active",
+      // Validate and filter: only archive trips that are in tripIds, active, and belong to the car
+      const selectedTrips = state.trips.filter(
+        (t) =>
+          action.tripIds.includes(t.id) &&
+          t.carId === action.carId &&
+          t.status === "active",
       );
-      if (activeTrips.length === 0) return state;
+      if (selectedTrips.length === 0) return state;
 
       const totalDistanceKm = roundTo2(
-        activeTrips.reduce((s, t) => s + t.distanceKm, 0),
+        selectedTrips.reduce((s, t) => s + t.distanceKm, 0),
       );
       const totalFuelL = roundTo2(
-        activeTrips.reduce((s, t) => s + t.estimatedUsageL, 0),
+        selectedTrips.reduce((s, t) => s + t.estimatedUsageL, 0),
       );
       const totalFuelCost = roundTo2(totalFuelL * action.gasPrice);
       const totalTollCost = roundTo2(
-        activeTrips.reduce((s, t) => s + t.tollCost, 0),
+        selectedTrips.reduce((s, t) => s + t.tollCost, 0),
       );
       const grandTotal = roundTo2(totalFuelCost + totalTollCost);
 
@@ -157,13 +163,15 @@ function reducer(state: AppState, action: AppAction): AppState {
         totalFuelCost,
         totalTollCost,
         grandTotal,
-        tripIds: activeTrips.map((t) => t.id),
+        tripIds: selectedTrips.map((t) => t.id),
       };
 
       return {
         ...state,
         trips: state.trips.map((t) =>
-          t.carId === action.carId && t.status === "active"
+          action.tripIds.includes(t.id) &&
+          t.carId === action.carId &&
+          t.status === "active"
             ? { ...t, status: "filled" as const, fillUpId }
             : t,
         ),
@@ -200,6 +208,23 @@ function reducer(state: AppState, action: AppAction): AppState {
 
     case "SET_GAS_PRICE": {
       return { ...state, gasPrice: action.price };
+    }
+
+    case "UPDATE_CAR": {
+      const trimmedName = action.name.trim();
+      if (!trimmedName) return state;
+      return {
+        ...state,
+        cars: state.cars.map((c) =>
+          c.id === action.carId
+            ? {
+                ...c,
+                name: trimmedName,
+                plateNumber: action.plateNumber?.trim() || undefined,
+              }
+            : c,
+        ),
+      };
     }
 
     case "REPLACE_ALL": {

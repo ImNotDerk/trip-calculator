@@ -20,7 +20,14 @@ export function SummaryCard({ car }: SummaryCardProps) {
 
   return (
     <div className="surface-card rounded-lg p-5 sm:p-8">
-      <h4 className="mb-6">{car.name}</h4>
+      <h4 className="mb-6 break-words">
+        {car.name}
+        {car.plateNumber && (
+          <span className="ml-2 text-muted font-normal text-base" style={{ fontFamily: "Inter, sans-serif" }}>
+            {car.plateNumber}
+          </span>
+        )}
+      </h4>
 
       {tripCount === 0 ? (
         <p className="text-muted text-sm" style={{ fontFamily: "Inter, sans-serif" }}>

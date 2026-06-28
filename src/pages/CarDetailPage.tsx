@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useToast } from "../components/Toast";
+import { EditCarModal } from "../components/EditCarModal";
 import { TripTable } from "../components/TripTable";
 import { FillUpButton } from "../components/FillUpButton";
 import { GasPriceInput } from "../components/GasPriceInput";
@@ -11,6 +12,7 @@ export function CarDetailPage() {
   const { state, dispatch } = useAppContext();
   const { addToast } = useToast();
   const [confirmUndo, setConfirmUndo] = useState(false);
+  const [editingCar, setEditingCar] = useState(false);
 
   const car = state.cars.find((c) => c.id === carId);
 
@@ -55,24 +57,38 @@ export function CarDetailPage() {
 
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1>{car.name}</h1>
+          <h1>
+            {car.name}
+            {car.plateNumber && (
+              <span className="ml-2.5 text-muted font-normal text-2xl sm:text-3xl" style={{ fontFamily: "Inter, sans-serif" }}>
+                {car.plateNumber}
+              </span>
+            )}
+            <button
+              onClick={() => setEditingCar(true)}
+              className="ml-3 inline-block align-middle rounded-md border border-hairline bg-canvas px-3 py-1 text-xs font-medium text-muted transition-colors hover:text-ink hover:border-ink/30"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Edit
+            </button>
+          </h1>
           <p className="mt-2 text-muted" style={{ fontFamily: "Inter, sans-serif" }}>
             {activeTrips.length} active trip
             {activeTrips.length !== 1 ? "s" : ""} in current tank
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-start sm:items-end gap-3 sm:gap-4">
           <GasPriceInput />
           <Link
             to={`/cars/${car.id}/analytics`}
-            className="rounded-md border border-hairline bg-canvas px-4 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
+            className="rounded-md border border-hairline bg-canvas px-4 py-3 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             Analytics
           </Link>
           <Link
             to={`/cars/${car.id}/history`}
-            className="rounded-md border border-hairline bg-canvas px-4 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
+            className="rounded-md border border-hairline bg-canvas px-4 py-3 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             History
@@ -106,7 +122,7 @@ export function CarDetailPage() {
                     setTimeout(() => setConfirmUndo(false), 4000);
                   }
                 }}
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`rounded-md px-3 py-2 text-xs font-medium transition-colors ${
                   confirmUndo
                     ? "bg-primary text-on-primary"
                     : "text-accent-teal hover:underline"
@@ -141,13 +157,30 @@ export function CarDetailPage() {
       <div className="mb-8 flex items-center gap-4">
         <Link
           to={`/cars/${car.id}/trips/new`}
-          className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary no-underline transition-colors hover:bg-primary-active"
+          className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary no-underline transition-colors hover:bg-primary-active"
           style={{ fontFamily: "Inter, sans-serif" }}
         >
           + Log Trip
         </Link>
         <FillUpButton carId={car.id} />
       </div>
+
+      {/* Edit car modal */}
+      {editingCar && (
+        <EditCarModal
+          car={car}
+          onClose={() => setEditingCar(false)}
+          onSave={(name, plateNumber) => {
+            dispatch({
+              type: "UPDATE_CAR",
+              carId: car.id,
+              name,
+              plateNumber,
+            });
+            setEditingCar(false);
+          }}
+        />
+      )}
 
       {/* Active trips */}
       {activeTrips.length === 0 ? (
@@ -164,10 +197,10 @@ export function CarDetailPage() {
               Log your first trip to get started.
             </p>
           )}
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
             <Link
               to={`/cars/${car.id}/trips/new`}
-              className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-on-primary no-underline"
+              className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-on-primary no-underline text-center"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               + Log Trip
@@ -175,7 +208,7 @@ export function CarDetailPage() {
             {fillUps.length > 0 && (
               <Link
                 to={`/cars/${car.id}/history`}
-                className="rounded-md border border-hairline bg-canvas px-5 py-2.5 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft"
+                className="rounded-md border border-hairline bg-canvas px-5 py-3 text-sm font-medium text-ink no-underline transition-colors hover:bg-surface-soft text-center"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 View History

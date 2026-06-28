@@ -58,6 +58,7 @@ export function TripRow({ trip, showCar: _showCar }: TripRowProps) {
   };
 
   const isActive = trip.status === "active";
+  const estimatedUsage = computeEstimatedUsage(parseFloat(distanceKm) || 0, parseFloat(fuelConsumptionKmL) || 0);
 
   if (editing) {
     return (
@@ -67,14 +68,14 @@ export function TripRow({ trip, showCar: _showCar }: TripRowProps) {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm"
+            className="w-full min-w-[130px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink"
           />
         </td>
         <td className="px-4 py-2">
           <select
             value={direction}
             onChange={(e) => setDirection(e.target.value as Trip["direction"])}
-            className="w-full rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm"
+            className="w-full min-w-[70px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink"
           >
             <option value="to">To</option>
             <option value="from">From</option>
@@ -87,7 +88,7 @@ export function TripRow({ trip, showCar: _showCar }: TripRowProps) {
             value={label}
             onChange={(e) => setLabel(e.target.value)}
             placeholder="Optional"
-            className="w-full rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm"
+            className="w-full min-w-[90px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink"
           />
         </td>
         <td className="px-4 py-2">
@@ -95,7 +96,7 @@ export function TripRow({ trip, showCar: _showCar }: TripRowProps) {
             type="number"
             value={distanceKm}
             onChange={(e) => setDistanceKm(e.target.value)}
-            className="w-20 rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-right"
+            className="w-full min-w-[75px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink text-right"
           />
         </td>
         <td className="px-4 py-2">
@@ -103,18 +104,18 @@ export function TripRow({ trip, showCar: _showCar }: TripRowProps) {
             type="number"
             value={fuelConsumptionKmL}
             onChange={(e) => setFuelConsumptionKmL(e.target.value)}
-            className="w-20 rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-right"
+            className="w-full min-w-[80px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink text-right"
           />
         </td>
-        <td className="px-4 py-2 text-right text-muted">
-          {computeEstimatedUsage(parseFloat(distanceKm) || 0, parseFloat(fuelConsumptionKmL) || 0).toFixed(2)} L
+        <td className="px-4 py-2 text-right tabular-nums text-sm text-ink">
+          {estimatedUsage.toFixed(2)} L
         </td>
         <td className="px-4 py-2">
           <input
             type="number"
             value={tollCost}
             onChange={(e) => setTollCost(e.target.value)}
-            className="w-20 rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-right"
+            className="w-full min-w-[75px] rounded-md border border-hairline bg-canvas px-2 py-1.5 text-sm text-ink text-right"
           />
         </td>
         <td className="px-4 py-2">
