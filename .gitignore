@@ -17,5 +17,8 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Generated PR/temp files
+tmp/
+
 # TypeScript
 *.tsbuildinfo
